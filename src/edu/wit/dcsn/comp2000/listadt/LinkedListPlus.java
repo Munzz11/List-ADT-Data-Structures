@@ -19,6 +19,7 @@
 
 package edu.wit.dcsn.comp2000.listadt ;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator ;
 import java.util.Random;
@@ -287,15 +288,47 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 	@Override
 	public void shuffle()
 		{
-		Random rand = new Random();
-	
-		for(int i = 0; i < numberOfEntries;i++)
-		{
-			int n = rand.nextInt(numberOfEntries + 1);
-			T removed = remove(0);
-			add(n, removed);
-		}
+		ArrayList half1 = new ArrayList();
+		ArrayList half2 = new ArrayList();
 		
+		int j = numberOfEntries;
+		for(int i = 0;i<j;i++)
+		{
+		if(i<=(j/2))
+		{
+			T temp = remove(0);
+			half1.add(temp);
+		}
+		else
+		{
+			T temp = remove(0);
+			half2.add(temp);	
+		}
+			
+		}
+		System.out.println(numberOfEntries);
+		System.out.println(half1);
+		System.out.print(half2);
+		
+		for(int i = 0;i <= j-1;i++ )
+		{
+			int half1Count =0;
+			int half2Count =0;
+			if(i % 2 == 0)
+			{
+				System.out.println("adding from half1");
+				add((T) half1.get(half1Count));
+				half1.remove(half1Count);
+				half1Count++;
+			}
+			else
+			{
+				System.out.println("adding from half2");
+				add((T) half2.get(half2Count));
+				half2.remove(half2Count);
+				half2Count++;
+			}
+		}
 		}	// end shuffle()
 
 
@@ -491,6 +524,7 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		testList.add("j");
 		testList.add("k");
 		testList.add("l");
+		testList.add("m");
 		testList.toString();
 		testList.shuffle();
 		testList.toString();
