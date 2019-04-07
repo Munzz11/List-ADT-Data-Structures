@@ -22,6 +22,7 @@ package edu.wit.dcsn.comp2000.listadt ;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator ;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 /*
@@ -213,12 +214,40 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 	@Override
 	public Iterator<T> iterator()
 		{
-		// TODO Auto-generated method stub
 		
-		return null ;
+		return new LinkedListPlusIterator();
 		
 		}	// end iterator()
+	private class LinkedListPlusIterator implements Iterator<T>
+    {
+        private Node nextNode;
 
+        private LinkedListPlusIterator ()
+        {
+            nextNode = firstNode;
+        } // end default constructor
+        @Override
+        public T next ()
+        {
+            if (hasNext() )
+            {
+                Node returnNode = nextNode;
+                nextNode = nextNode.getNextNode();
+                return returnNode.getData();
+            }
+            else
+            {
+                throw new NoSuchElementException("Illegal call to next(); iterator is after end of list.");
+            }
+        }
+
+		@Override
+		public boolean hasNext() {
+			
+			return nextNode != null;
+		}
+	
+	}
 
 	/* (non-Javadoc)
 	 * @see edu.wit.dcsn.comp2000.listadt.ListInterface#remove()
@@ -290,43 +319,44 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		{
 		ArrayList half1 = new ArrayList();
 		ArrayList half2 = new ArrayList();
-		
 		int j = numberOfEntries;
-		for(int i = 0;i<j;i++)
+		for(int i = 0; i < 3;i++)
 		{
-		if(i<=(j/2))
-		{
-			T temp = remove(0);
-			half1.add(temp);
-		}
-		else
-		{
-			T temp = remove(0);
-			half2.add(temp);	
-		}
-			
-		}
-		System.out.println(numberOfEntries);
-		System.out.println(half1);
-		System.out.print(half2);
-		
-		for(int i = 0;i <= j-1;i++ )
-		{
-			int half1Count =0;
-			int half2Count =0;
-			if(i % 2 == 0)
+			for(int i1 = 0;i1<j;i1++)
 			{
-				System.out.println("adding from half1");
-				add((T) half1.get(half1Count));
-				half1.remove(half1Count);
-				half1Count++;
+			if(i1<=(j/2))
+			{
+				T temp = remove(0);
+				half1.add(temp);
 			}
 			else
 			{
-				System.out.println("adding from half2");
-				add((T) half2.get(half2Count));
-				half2.remove(half2Count);
-				half2Count++;
+				T temp = remove(0);
+				half2.add(temp);	
+			}
+				
+			}
+			
+			
+			for(int i1 = 0;i1 <= j-1;i1++ )
+			{
+				int half1Count =0;
+				int half2Count =0;
+				if(i1 % 2 == 0)
+				{
+					
+					add((T) half1.get(half1Count));
+					half1.remove(half1Count);
+					half1Count++;
+				}
+				else
+				{
+					
+					add((T) half2.get(half2Count));
+					half2.remove(half2Count);
+					half2Count++;
+				}
+				
 			}
 		}
 		}	// end shuffle()
@@ -338,7 +368,25 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 	@Override
 	public void sort()
 		{
-		// TODO Auto-generated method stub
+		T[] arr = toArray();
+		
+		 for (int i = 0; i < arr.length - 1; i++)
+	        {
+	            int index = i;
+	            for (int j = i + 1; j < arr.length; j++)
+	                if (arr[j].compareTo(arr[index])<0) 
+	                    index = j;
+	      
+	            T smallerNumber = arr[index];  
+	            arr[index] = arr[i];
+	            arr[i] = smallerNumber;
+	        }
+		 int num = numberOfEntries;
+		 clear();
+		 for(int i = 0;i < num;i++)
+		 {
+			 add(arr[i]);
+		 }
 		
 		}	// end sort()
 
@@ -512,6 +560,9 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		
 		LinkedListPlus testList = new LinkedListPlus();
 		
+		System.out.println("Testing the add() method by adding Strings of (a - z) to stack");
+		System.out.println(".\n.\n.\n.");
+		
 		testList.add("a");
 		testList.add("b");
 		testList.add("c");
@@ -525,11 +576,61 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		testList.add("k");
 		testList.add("l");
 		testList.add("m");
+		testList.add("n");
+		testList.add("o");
+		testList.add("p");
+		testList.add("q");
+		testList.add("r");
+		testList.add("s");
+		testList.add("t");
+		testList.add("u");
+		testList.add("v");
+		testList.add("w");
+		testList.add("r");
+		testList.add("x");
+		testList.add("y");
+		testList.add("z");
+		
+		System.out.println("----------------------------------------------------------------------");
+		
+		System.out.println("Testing the toString and subsequently toArray() by printing the List");
+		System.out.println(".\n.\n.\n.");
 		testList.toString();
+		
+		System.out.println("----------------------------------------------------------------------");
+		
+		System.out.println("Testing the shuffle() method by shuffling list containing (a - z)");
+		System.out.println(".\n.\n.\n.");
 		testList.shuffle();
+		System.out.println("Output: ");
 		testList.toString();
+		
+		System.out.println("----------------------------------------------------------------------");
+		
+		System.out.println("Testing the sort() method by shuffling list containing (a - z)");
+		System.out.println(".\n.\n.\n.");
+		testList.sort();
+		System.out.println("Output: ");
+		testList.toString();
+		
+		System.out.println("----------------------------------------------------------------------");
+		
+		System.out.println("Testing the Iterator() method by using a loop to traverse the chain of nodes and print the contents of each linked node");
+		System.out.println(".\n.\n.\n.");
+		testList.sort();
+		System.out.println("Output: ");
+        Iterator listIt = testList.iterator();
+		while(listIt.hasNext())
+		{
+			System.out.print(listIt.next() + " ");	
+		}
+		System.out.println();
+		System.out.println("----------------------------------------------------------------------");
+		
+		
 		
     	
     	}	// end main()
 	
-	} // end class LinkedListPlus
+	
+	}// end class LinkedListPlus
