@@ -24,6 +24,7 @@ import java.util.Random;
 
 /*
  * NOTE: Make sure you add Javadoc comments to every method
+ * hi
  */
 
 /**
