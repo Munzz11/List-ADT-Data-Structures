@@ -19,6 +19,7 @@
 
 package edu.wit.dcsn.comp2000.listadt ;
 
+import java.util.Arrays;
 import java.util.Iterator ;
 import java.util.Random;
 
@@ -317,7 +318,8 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		{
 		// The cast is safe because the new array contains null entries
 		@SuppressWarnings( "unchecked" )
-		T[] result = ( T[] ) new Object[ numberOfEntries ] ;
+		//T[] result = ( T[] ) new Object[ numberOfEntries ] ;
+		T[] result = (T[]) new Comparable[numberOfEntries];
 
 		int index = 0 ;
 		Node currentNode = firstNode ;
@@ -340,9 +342,10 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 	public String toString()
 		{
 		
-		T[] array1 = toArray();
+		//T[] array1 = toArray();
+		String array1 = Arrays.toString(toArray());
 		
-		//for(int i = 0; i < numberOfEntries + 1; i++)
+		
 		
 			System.out.println(array1);
 		
@@ -480,6 +483,16 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		testList.add("b");
 		testList.add("c");
 		testList.add("d");
+		testList.add("e");
+		testList.add("f");
+		testList.add("g");
+		testList.add("h");
+		testList.add("i");
+		testList.add("j");
+		testList.add("k");
+		testList.add("l");
+		testList.toString();
+		testList.shuffle();
 		testList.toString();
 		
     	
