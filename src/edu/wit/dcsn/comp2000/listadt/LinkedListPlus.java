@@ -324,12 +324,12 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 		{
 			for(int i1 = 0;i1<j;i1++)
 			{
-			if(i1<=(j/2))
+			if(i1<=(j/2) && !isEmpty())
 			{
 				T temp = remove(0);
 				half1.add(temp);
 			}
-			else
+			else if(!isEmpty())
 			{
 				T temp = remove(0);
 				half2.add(temp);	
@@ -342,14 +342,14 @@ public class LinkedListPlus<T extends Comparable<? super T>>
 			{
 				int half1Count =0;
 				int half2Count =0;
-				if(i1 % 2 == 0)
+				if(i1 % 2 == 0 && !half1.isEmpty())
 				{
 					
 					add((T) half1.get(half1Count));
 					half1.remove(half1Count);
 					half1Count++;
 				}
-				else
+				else if(!half2.isEmpty())
 				{
 					
 					add((T) half2.get(half2Count));
